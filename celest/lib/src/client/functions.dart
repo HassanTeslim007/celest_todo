@@ -7,6 +7,7 @@ library;
 import 'dart:convert';
 
 import 'package:celest/celest.dart';
+import 'package:celest_backend/exceptions.dart';
 import 'package:celest_backend/models.dart';
 import 'package:celest_core/src/exception/cloud_exception.dart';
 
@@ -103,6 +104,8 @@ class CelestFunctionsTasks {
     final $code = ($error['code'] as String);
     final $details = ($error['details'] as Map<String, Object?>?);
     switch ($code) {
+      case r'ServerException':
+        throw Serializers.instance.deserialize<ServerException>($details);
       case r'BadRequestException':
         throw Serializers.instance.deserialize<BadRequestException>($details);
       case r'InternalServerException':

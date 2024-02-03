@@ -29,5 +29,6 @@ class Celest {
 
   void init() {
     Serializers.instance.put(const TaskSerializer());
+    Serializers.instance.put(const ServerExceptionSerializer());
   }
 }

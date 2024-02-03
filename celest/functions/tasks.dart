@@ -1,3 +1,4 @@
+import 'package:celest_backend/client.dart';
 import 'package:celest_backend/models.dart';
 import 'package:uuid/uuid.dart';
 
@@ -11,6 +12,9 @@ List<Task> alltasks() {
 Future<List<Task>> addTask(
     {required String title, required String importance}) async {
   print('creating new task');
+  if(title.trim().isEmpty){
+    throw ServerException('Title cannot be empty');
+  }
   var uuid = Uuid();
   final newTask = Task(
       id: uuid.v1(),

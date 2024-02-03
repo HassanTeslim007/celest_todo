@@ -240,11 +240,20 @@ class TodoListState extends State<TodoList> {
                       tasks = await celest.functions.tasks.addTask(
                           importance: selectedImportance,
                           title: titleController.text);
+                    } on ServerException catch (e) {
+                      if (!mounted) return;
+                      ScaffoldMessenger.of(context).showSnackBar(
+                          SnackBar(content: Text('Error: ${e.message}')));
+                      titleController.clear();
+                      return;
                     } catch (e) {
                       if (!mounted) return;
                       ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
                           content: Text('Unable to connect to server')));
+                      titleController.clear();
+                      return;
                     }
+
                     setState(() {});
                     if (!mounted) return;
                     Navigator.of(context).pop();
